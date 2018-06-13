@@ -13,6 +13,7 @@ public class main {
 					//main_window frame = new main_window();
 					ShowParsedDataWindow frame = new ShowParsedDataWindow();
 					frame.setVisible(true);
+					DbConnector.getInstance();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

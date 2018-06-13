@@ -11,9 +11,9 @@ public class List {
     private WeatherElement[] weather;
     private Clouds clouds;
     private Wind wind;
-    private Snow snow;
     private Sys sys;
     private String dtTxt;
+    private Rain rain;
 
     @JsonProperty("dt")
     public long getDt() { return dt; }
@@ -40,11 +40,6 @@ public class List {
     @JsonProperty("wind")
     public void setWind(Wind value) { this.wind = value; }
 
-    @JsonProperty("snow")
-    public Snow getSnow() { return snow; }
-    @JsonProperty("snow")
-    public void setSnow(Snow value) { this.snow = value; }
-
     @JsonProperty("sys")
     public Sys getSys() { return sys; }
     @JsonProperty("sys")
@@ -54,4 +49,9 @@ public class List {
     public String getDtTxt() { return dtTxt; }
     @JsonProperty("dt_txt")
     public void setDtTxt(String value) { this.dtTxt = value; }
+
+    @JsonProperty("rain")
+    public Rain getRain() { return rain; }
+    @JsonProperty("rain")
+    public void setRain(Rain value) { this.rain = value; }
 }

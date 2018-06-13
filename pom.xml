@@ -30,6 +30,94 @@
     	<artifactId>commons-io</artifactId>
     	<version>2.4</version>
     </dependency>
+    <dependency>
+    	<groupId>org.jooq</groupId>
+    	<artifactId>jooq</artifactId>
+    	<version>3.11.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.jooq</groupId>
+    	<artifactId>jooq-meta</artifactId>
+    	<version>3.11.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.jooq</groupId>
+    	<artifactId>jooq-codegen</artifactId>
+    	<version>3.11.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    	<version>8.0.11</version>
+    </dependency>
+    <dependency>
+    	<groupId>javax.xml.bind</groupId>
+    	<artifactId>jaxb-api</artifactId>
+    	<version>2.3.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.sun.xml.bind</groupId>
+    	<artifactId>jaxb-core</artifactId>
+    	<version>2.2.11</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.sun.xml.bind</groupId>
+    	<artifactId>jaxb-impl</artifactId>
+    	<version>2.2.11</version>
+    </dependency>
   </dependencies>
   <artifactId>test</artifactId>
+  
+  <plugin>
+
+	  <!-- Specify the maven code generator plugin -->
+	  <groupId>org.jooq</groupId>
+	  <artifactId>jooq-codegen-maven</artifactId>
+	  <version>3.1.0</version>
+	
+	  <!-- The plugin should hook into the generate goal -->
+	  <executions>
+	    <execution>
+	      <goals>
+	        <goal>generate</goal>
+	      </goals>
+	    </execution>
+	  </executions>
+	
+	  <!-- Manage the plugin's dependency. In this example, we'll use a PostgreSQL database -->
+	  <dependencies>
+	    <dependency>
+	      <groupId>org.postgresql</groupId>
+	      <artifactId>postgresql</artifactId>
+	      <version>9.4.1212</version>
+	    </dependency>
+	  </dependencies>
+	
+	  <!-- Specify the plugin configuration.
+	       The configuration format is the same as for the standalone code generator -->
+	  <configuration>
+	
+	    <!-- JDBC connection parameters -->
+	    <jdbc>
+	      <driver>org.postgresql.Driver</driver>
+	      <url>jdbc:postgresql:postgres</url>
+	      <user>postgres</user>
+	      <password>1234</password>
+	    </jdbc>
+	
+	    <!-- Generator parameters -->
+	    <generator>
+	      <database>
+	        <name>org.jooq.util.postgres.PostgresDatabase</name>
+	        <includes>.*</includes>
+	        <excludes></excludes>
+	        <inputSchema>public</inputSchema>
+	      </database>
+	      <target>
+	        <packageName>org.jooq.dataBase.pogoda</packageName>
+	        <directory>src/</directory>
+	      </target>
+	    </generator>
+	  </configuration>
+	</plugin>
 </project>

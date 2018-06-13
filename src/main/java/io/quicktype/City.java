@@ -10,6 +10,7 @@ public class City {
     private String name;
     private Coord coord;
     private String country;
+    private long population;
 
     @JsonProperty("id")
     public long getID() { return id; }
@@ -30,4 +31,9 @@ public class City {
     public String getCountry() { return country; }
     @JsonProperty("country")
     public void setCountry(String value) { this.country = value; }
+
+    @JsonProperty("population")
+    public long getPopulation() { return population; }
+    @JsonProperty("population")
+    public void setPopulation(long value) { this.population = value; }
 }

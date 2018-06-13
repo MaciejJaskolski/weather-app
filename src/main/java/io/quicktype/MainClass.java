@@ -1,4 +1,3 @@
-
 // MainClass.java
 
 package io.quicktype;

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.*;
 public class WeatherElement {
     private long id;
     private MainEnum main;
-    private Description description;
+    private String description;
     private String icon;
 
     @JsonProperty("id")
@@ -22,9 +22,9 @@ public class WeatherElement {
     public void setMain(MainEnum value) { this.main = value; }
 
     @JsonProperty("description")
-    public Description getDescription() { return description; }
+    public String getDescription() { return description; }
     @JsonProperty("description")
-    public void setDescription(Description value) { this.description = value; }
+    public void setDescription(String value) { this.description = value; }
 
     @JsonProperty("icon")
     public String getIcon() { return icon; }

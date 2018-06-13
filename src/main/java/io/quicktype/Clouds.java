@@ -13,4 +13,3 @@ public class Clouds {
     @JsonProperty("all")
     public void setAll(long value) { this.all = value; }
 }
-
