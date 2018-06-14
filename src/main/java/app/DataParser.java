@@ -1,19 +1,17 @@
 package app;
 
-import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.math.RoundingMode;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.DecimalFormat;
 
 import javax.imageio.ImageIO;
-
 import org.apache.commons.io.FileUtils;
 
-import io.quicktype.Clouds;
 import io.quicktype.Converter;
 import io.quicktype.Weather;
 
@@ -21,40 +19,58 @@ public class DataParser {
 	
 	private URL url;
 	private String filePath = "res/forecast.txt";
-	private File weatherFile;
 	private Weather weather;
-	private Image weatherImg;
-	//URL url = new URL("http://samples.openweathermap.org/data/2.5/forecast?id=524901&appid=b6907d289e10d714a6e88b30761fae22");
-	//File file = new File("res/forecast.txt");
-	//FileUtils.copyURLToFile(url, file);
-	//String json = FileUtils.readFileToString(file);
 	
-	//Weather data  = Converter.fromJsonString(json);
-	
-	public DataParser(String cityname) {
+	public DataParser(String cityname) throws IOException {
 		try {
 			String apikey = "86a55b4022f4f3f2b3e9f93a9db6ba15";
 			String u = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityname +"&mode=json&appid=" + apikey;
 			url = new URL(u);
+			//if(isConnectionEstablished()) {
+				File weatherFile = new File(filePath);
+				try {
+						FileUtils.copyURLToFile(url, weatherFile);
+				} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+				}
+				try {
+						String json = FileUtils.readFileToString(weatherFile);
+						System.out.println("Copied file data to string");
+						weather = Converter.fromJsonString(json);
+						System.out.println("Parsed json string into program succesfully");
+				} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+				}
+			//}
+			//else {
+			//	System.out.println("No internet connection");
+			//	Dialog dialogNoConnection = new Dialog("No internet connection", "OK");
+			//	dialogNoConnection.Show();
+			//}
+			/*catch(Exception e) {
+				System.out.println("No internet connection");
+				Dialog dialogNoConnection = new Dialog("No internet connection", "OK");
+				dialogNoConnection.Show();
+			}*/
+			
+			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		File weatherFile = new File(filePath);
+	}
+	
+	public boolean isConnectionEstablished() throws IOException {
+		
+		URLConnection connection = url.openConnection();
 		try {
-			FileUtils.copyURLToFile(url, weatherFile);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			String json = FileUtils.readFileToString(weatherFile);
-			System.out.println("zzz");
-			weather = Converter.fromJsonString(json);
-			System.out.println("aaa");
+			connection.connect();
+			return true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return false;
 		}
 	}
 	

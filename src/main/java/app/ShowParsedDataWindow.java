@@ -21,6 +21,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.Component;
 
 public class ShowParsedDataWindow extends JFrame implements ActionListener{
@@ -39,7 +40,7 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 	private DataTable dataTable;
 	private SelectCityName selectCityName;// = new SelectCityName(this.getWidth(), this.getHeight(), this);
 	
-	DataParser dataParser = new DataParser(chosenCity);
+	DataParser dataParser;// = new DataParser(chosenCity);
 	DataTable dataTable_1;
 	DataTable dataTable_2;
 	DataTable dataTable_3;
@@ -52,6 +53,13 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 	
 	public ShowParsedDataWindow() {
 		setPreferredSize(new Dimension(800, 700));
+		
+		try {
+			dataParser = new DataParser(chosenCity);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
 		selectCityName = new SelectCityName(this.getWidth(), this.getHeight(), this);
 		selectCityName.setPreferredSize(new Dimension(0, -100));
@@ -118,7 +126,12 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 	private void updateData() {
 		//chosenCity = selectCityName.getCityName();
 		chosenCity = txtCityInput.getText();
-		dataParser = new DataParser(chosenCity);
+		try {
+			dataParser = new DataParser(chosenCity);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//dataParser.UpdateCity(chosenCity);
 		dataTable_1.Update(0, dataParser);
@@ -129,10 +142,17 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		//chosenCity = txtCityInput.getText();
-		//System.out.println("IamHere");
-		updateData();
-		
+		try {
+			if(dataParser.isConnectionEstablished())
+				updateData();
+			else {
+				System.out.println("No internet connection");
+				Dialog dialogNoConnection = new Dialog("No internet connection", "OK");
+				dialogNoConnection.Show();
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 }
