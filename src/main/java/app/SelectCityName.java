@@ -40,13 +40,13 @@ public class SelectCityName extends JPanel implements ActionListener{
 		findCity = new WeatherAppButton("Check weather");
 			
 		//label
-		cityInputHelper.setPreferredSize(new Dimension(555, 50));
+		cityInputHelper.setPreferredSize(new Dimension(555, 30));
 		
 		//input textfield
 		txtCityInput.setPreferredSize(new Dimension(350, 50));
 			
 		//button
-		findCity.setPreferredSize(new Dimension(200, 50));
+		findCity.setPreferredSize(new Dimension(200, 30));
 		findCity.LinkWithTextField(txtCityInput);
 		//findCity.addActionListener(this);
 		findCity.AddActionListener(this);
@@ -80,5 +80,9 @@ public class SelectCityName extends JPanel implements ActionListener{
 			System.out.println("Bad args");
 			errorInput.setVisible(true);
 		}
+	}
+	
+	public String getCityName() {
+		return txtCityInput.ReturnCurrentText();
 	}
 }

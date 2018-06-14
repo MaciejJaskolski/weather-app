@@ -19,22 +19,7 @@ public class DbConnector {
 	String url = "jdbc:mysql://localhost:3306/weather?useUnicode=true&serverTimezone=UTC&useSSL=false"; 
 	
 	private DbConnector() {
-		try{
-			Connection c = DriverManager.getConnection(url, username, pwd);
-			DSLContext create = DSL.using(c, SQLDialect.MYSQL);
-            Result<Record> result = create.select().from(POGODA).fetch();
-
-            for (Record r : result) {
-                Integer id = r.getValue(POGODA.ID);
-                String nazwaMiasta = r.getValue(POGODA.NAZWAMIASTA);
-                double minTemp = r.getValue(POGODA.MINTEMPERATURA);
-
-                System.out.println("ID: " + id + " nazwa miasta: " + nazwaMiasta + " minTemp: " + minTemp);
-            }
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+		//this.getRecords();
 	}
 	
 	public static synchronized DbConnector getInstance() {
@@ -45,5 +30,32 @@ public class DbConnector {
 		return connection;
 	}
 	
+	public void getRecords() {
+		Connection c;
+		try {
+			c = DriverManager.getConnection(url, username, pwd);
+			DSLContext create = DSL.using(c, SQLDialect.MYSQL);
+			 Result<Record> result = create.select().from(POGODA).fetch();
+
+	         for (Record r : result) {
+	             Integer id = r.getValue(POGODA.ID);
+	             String nazwaMiasta = r.getValue(POGODA.NAZWAMIASTA);
+	             double minTemp = r.getValue(POGODA.MINTEMPERATURA);
+
+	             System.out.println("ID: " + id + " nazwa miasta: " + nazwaMiasta + " minTemp: " + minTemp);
+	         }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertData(int id, String nazwaMiasta, double minT, double maxT, double cisnienie) {
+	/*	create.insertInto(AUTHOR,
+		        AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+		      .values(100, "Hermann", "Hesse")
+		      .execute();*/
+	}
 	
 }
+

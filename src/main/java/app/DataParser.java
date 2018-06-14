@@ -58,6 +58,33 @@ public class DataParser {
 		}
 	}
 	
+	public void UpdateCity(String city) {
+		try {
+			String apikey = "86a55b4022f4f3f2b3e9f93a9db6ba15";
+			String u = "http://api.openweathermap.org/data/2.5/forecast?q=" + city +"&mode=json&appid=" + apikey;
+			url = new URL(u);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		File weatherFile = new File(filePath);
+		try {
+			FileUtils.copyURLToFile(url, weatherFile);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			String json = FileUtils.readFileToString(weatherFile);
+			System.out.println("zzz");
+			weather = Converter.fromJsonString(json);
+			System.out.println("aaa");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public String getCityName() {
 		return weather.getCity().getName();
 	}

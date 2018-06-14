@@ -47,16 +47,11 @@ public class DataTable extends JPanel{
 		
 		//Object rowData[][] = { { dataParser.getCityName(), dataParser.getTemperature(0), dataParser.getTemperature(1)},
 		//        		{ dataParser.getTemperature(2), dataParser.getTemperature(3), dataParser.getTemperature(4)} };
-		Object rowData[][] = {  { "Aktualna temp: " + dataParser.getTemperature(day) },
-								{ "Min. temp.: " + dataParser.getMinTemperature(day) }, 
-								{ "Max temp.: " + dataParser.getMaxTemperature(day) }, 
-								{ "Ciśnienie: " + dataParser.getPressure(day) }
-							 };
-		
-		Object columnNames[] = { day };
+		Object rowData[][] = FillWithData(day, dataParser);
+		Object columnNames[] = { ConvertDayIntToString(day) };
 		
 		TableModel model = new DefaultTableModel(rowData, columnNames);
-		JTable tabela = new JTable(model);
+		tabela = new JTable(model);
 		tabela.setShowGrid(false);
 		Border border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Properties.DARK_YELLOW), 
 				BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -79,6 +74,34 @@ public class DataTable extends JPanel{
 		tabela.setFillsViewportHeight(true);
 	}
 	
+	public Object[][] FillWithData(int day, DataParser dataParser) {
+		Object[][] arr= {  { "Aktualna temp: " + dataParser.getTemperature(day) },
+				{ "Min. temp.: " + dataParser.getMinTemperature(day) }, 
+				{ "Max temp.: " + dataParser.getMaxTemperature(day) }, 
+				{ "Ciśnienie: " + dataParser.getPressure(day) }
+			 };
+		return arr;
+	}
+	
+	public void Update(int day, DataParser dataParser) {
+		Object columnNames[] = { ConvertDayIntToString(day) };
+		TableModel model = new DefaultTableModel(FillWithData(day, dataParser), columnNames);
+		//tabela = new JTable(model);
+		tabela.setModel(model);
+	}
+	
+	private String ConvertDayIntToString(int day) {
+		switch(day) {
+		case 0:
+			return "Dzisiaj";
+		case 1:
+			return "Jutro";
+		case 2:
+			return "Pojutrze";
+		default:
+			return "BLAD KONWERSJI DNIA (int) na string";
+		}
+	}
 	
 	/*@Override
     protected void paintComponent(Graphics g) {
