@@ -3,7 +3,7 @@
 Aplikacja na projekt z przedmiotu Platformy Programistyczne .Net i Java
 
 
-##OPIS APLIKACJI
+## OPIS APLIKACJI
 
 1. Aplikacja pobiera prognozę pogody z https://openweathermap.org/api w formacie JSON, następnie parsuje te dane i wyświetla
   w formie tabel. Parser danych został wygenerowany za pomocą quicktype.io.
@@ -16,7 +16,7 @@ Aplikacja na projekt z przedmiotu Platformy Programistyczne .Net i Java
 4. Aplikacja wyświetla wykres temperatury co 3h z dzisiaj.
 
 
-##MAVEN DEPENDENCIES
+## MAVEN DEPENDENCIES
 
  <dependencies>
     <dependency>
@@ -83,7 +83,7 @@ Aplikacja na projekt z przedmiotu Platformy Programistyczne .Net i Java
   </dependencies>
 
 
-##DOKŁADNY OPIS
+## DOKŁADNY OPIS
 
   ShowParsedDataWindow.java jest głównym oknem aplikacji, gdzie wyświetlane są odpowiednie komponenty. Komponenty są definiują mniejsze 
 fragmenty kodu i można ich używać wielokrotnie i współdzielą właściwości(kolor, zachowanie). Kilka z nich to: 
