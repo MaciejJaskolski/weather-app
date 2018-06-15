@@ -1,10 +1,10 @@
-# weather-app
+## weather-app
 
 Aplikacja na projekt z przedmiotu Platformy Programistyczne .Net i Java
 
-----------------
--OPIS APLIKACJI-
-----------------
+
+##OPIS APLIKACJI
+
 1. Aplikacja pobiera prognozę pogody z https://openweathermap.org/api w formacie JSON, następnie parsuje te dane i wyświetla
   w formie tabel. Parser danych został wygenerowany za pomocą quicktype.io.
 2. Użytkownik może wybrać miasto, w którym chce sprawdzić pogodę. W przypadku braku połącznenia z internetem aplikacja
@@ -13,12 +13,12 @@ Aplikacja na projekt z przedmiotu Platformy Programistyczne .Net i Java
   - wyświetlić wszystkie rekordy
   - usunąć wszystkie rekordy
   - znaleźć rekordy odpowiadające szukanemu miastu
-(WIP) 4. Aplikacja wyświetla wykres temperatury co 3h z dzisiaj.
+4. Aplikacja wyświetla wykres temperatury co 3h z dzisiaj.
 
-------------------
-MAVEN DEPENDENCIES
-------------------
-<dependencies>
+
+##MAVEN DEPENDENCIES
+
+ <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -75,11 +75,16 @@ MAVEN DEPENDENCIES
     	<artifactId>jfreechart</artifactId>
     	<version>1.0.19</version>
     </dependency>
+  <dependency>
+    	<groupId>joda-time</groupId>
+    	<artifactId>joda-time</artifactId>
+    	<version>2.10</version>
+    </dependency>
   </dependencies>
 
------------------
---DOKŁADNY OPIS--
------------------
+
+##DOKŁADNY OPIS
+
   ShowParsedDataWindow.java jest głównym oknem aplikacji, gdzie wyświetlane są odpowiednie komponenty. Komponenty są definiują mniejsze 
 fragmenty kodu i można ich używać wielokrotnie i współdzielą właściwości(kolor, zachowanie). Kilka z nich to: 
   -WeatherAppButton- pomarańczowy przycisk
@@ -94,6 +99,8 @@ W przypadku braku połączenia z internetem wyświetli się odpowiedni komunikat
  to usuwanie wszystkich rekordów, szukanie rekordów wg wpisanego miasta. Wszystkie operacje na bazie danych są w DBConnector, który 
 jest singletonem. Paczki db.tables, db.tables.records są pregenerowane przez jooq za pomocą komendy:
 
-java -classpath jooq-3.11.0.jar;jooq.meta-3.11.0.jar;jooq-codegen-3.11.0.jar;mysql-connector-java-8-0-11.jar;. --add-modules java.xml.bind org.jooq.codegen.GenerationTOll pogoda.xml
+*java -classpath jooq-3.11.0.jar;jooq.meta-3.11.0.jar;jooq-codegen-3.11.0.jar;mysql-connector-java-8-0-11.jar;. --add-modules java.xml.bind org.jooq.codegen.GenerationTOll pogoda.xml*
 
 i zawierają model tabeli Pogoda w Javie. 
+
+  WeatherChart generuje wykres pogody dla zadanych danych.
