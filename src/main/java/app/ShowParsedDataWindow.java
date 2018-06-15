@@ -6,38 +6,25 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import javax.swing.BorderFactory;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-
-import java.awt.GridLayout;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
-import net.miginfocom.swing.MigLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.awt.Component;
+import javax.swing.border.EmptyBorder;
 
 public class ShowParsedDataWindow extends JFrame implements ActionListener{
 	
 	private String chosenCity = "Wroclaw";
 	
-	private JPanel contentPane;
-	
-	private WeatherAppTextField input;
-	private Logo logo;
-	
 	private Image weatherImg;
 	
-	private final int tableWidth = 150;
-	private final int tableHeight = 200;
-	private DataTable dataTable;
 	private SelectCityName selectCityName;// = new SelectCityName(this.getWidth(), this.getHeight(), this);
 	
 	DataParser dataParser;// = new DataParser(chosenCity);
@@ -51,6 +38,8 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 	private LogoText cityInputHelper;
 	
 	JLabel city;
+	
+	WeatherChart chart;
 	
 	public ShowParsedDataWindow() {
 		setPreferredSize(new Dimension(800, 700));
@@ -83,8 +72,6 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 		txtCityInput.setPreferredSize(new Dimension(250, 50));
 		txtCityInput.setMaximumSize(new Dimension(250, 50));
 		
-		System.out.println("HERE: " + selectCityName.getCityName());
-		
 		dataTable_1 = new DataTable(0, dataParser);
 		//getContentPane().add(dataTable_1, BorderLayout.WEST);
 		
@@ -92,6 +79,14 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 		//getContentPane().add(dataTable_2, BorderLayout.CENTER);
 		
 		dataTable_3 = new DataTable(2, dataParser);
+		
+		chart = new WeatherChart(dataParser);
+		//JPanel chartPanel = new JPanel();
+		//chartPanel.setPreferredSize(new Dimension(900, 600));
+		chart.setBorder(new EmptyBorder(0, 0, 50, 0));
+		//chartPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		//chartPanel.add(chart);
+		//chart.setPreferredSize(new Dimension(600, 600));
 		//getContentPane().add(dataTable_3, BorderLayout.EAST);
 		
 		JPanel inputpanel = new JPanel();
@@ -121,6 +116,11 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 		getContentPane().add(city, BorderLayout.EAST);
 		getContentPane().add(inputpanel);
 		getContentPane().add(panel);
+		getContentPane().add(chart, BorderLayout.SOUTH);
+		
+		JScrollPane scroll = new JScrollPane(chart);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		this.getContentPane().add(scroll);
 		
 		this.pack();
 	}
@@ -155,12 +155,12 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 		
-		//dataParser.UpdateCity(chosenCity);
 		dataTable_1.Update(0, dataParser);
 		dataTable_2.Update(1, dataParser);
 		dataTable_3.Update(2, dataParser);
+		chart.Update(dataParser);
+		//chart.Update(dataParser);
 		city.setText(chosenCity);
-		//System.out.println("xxxx"  + dataParser.getCityName());
 	}
 
 	public void actionPerformed(ActionEvent e) {

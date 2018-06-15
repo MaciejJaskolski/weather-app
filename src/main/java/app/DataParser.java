@@ -117,6 +117,10 @@ public class DataParser {
 		return (weather.getList()[day*8].getMain().getTempMax() - 273);
 	}
 	
+	public double getCurTemperatureInterval(int interval) {
+		return weather.getList()[interval].getMain().getTemp() - 273;
+	}
+	
 	public double getMinTemperatureDouble(int day) {
 		return (weather.getList()[day*8].getMain().getTempMin() - 273);
 	}
