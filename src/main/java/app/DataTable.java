@@ -39,14 +39,6 @@ public class DataTable extends JPanel{
 
 	public DataTable(int day, DataParser dataParser) {
 		
-		//dataParser = new DataParser("Wroclaw");
-		
-		//weatherImg = dataParser.getIcon(day);
-		
-		System.out.println("Pogoda: dzien: " + day + "temp. : " + dataParser.getTemperature(day));
-		
-		//Object rowData[][] = { { dataParser.getCityName(), dataParser.getTemperature(0), dataParser.getTemperature(1)},
-		//        		{ dataParser.getTemperature(2), dataParser.getTemperature(3), dataParser.getTemperature(4)} };
 		Object rowData[][] = FillWithData(day, dataParser);
 		Object columnNames[] = { ConvertDayIntToString(day) };
 		

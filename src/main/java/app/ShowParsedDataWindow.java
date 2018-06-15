@@ -47,6 +47,7 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 	
 	private WeatherAppTextField txtCityInput;
 	private WeatherAppButton findCity;
+	private WeatherAppButton showDatabase;
 	private LogoText cityInputHelper;
 	
 	JLabel city;
@@ -60,18 +61,23 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 		selectCityName = new SelectCityName(this.getWidth(), this.getHeight(), this);
 		selectCityName.setPreferredSize(new Dimension(0, -100));
 		
 		cityInputHelper = new LogoText("Enter city name: ", Properties.fontSmall);
 		//errorInput = new LogoText("Bad input", Properties.fontError);
-		txtCityInput = new WeatherAppTextField("ex. Wroclaw");	
-		findCity = new WeatherAppButton("Check weather");
+		txtCityInput = new WeatherAppTextField("np. Wroclaw");	
+		findCity = new WeatherAppButton("Sprawdz pogodę");
 		cityInputHelper.setPreferredSize(new Dimension(555, 30));
 		findCity.setPreferredSize(new Dimension(200, 30));
 		
+		showDatabase = new WeatherAppButton("Pokaz baze danych");
+		showDatabase.setPreferredSize(new Dimension(200, 30));
+		
 		txtCityInput.addActionListener(this);
+		showDatabase.AddActionListener(this);
 		
 		//input textfield
 		txtCityInput.setPreferredSize(new Dimension(250, 50));
@@ -94,6 +100,7 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 		//inputpanel.add(Box.createHorizontalGlue());
 		inputpanel.add(txtCityInput, BorderLayout.LINE_START);
 		inputpanel.add(findCity, BorderLayout.LINE_START);
+		inputpanel.add(showDatabase, FlowLayout.RIGHT);
 		inputpanel.setBackground(Properties.DARK_YELLOW);
 		inputpanel.setPreferredSize(new Dimension(0, 70));
 		//inputpanel.setPreferredSize(new Dimension(this.getWidth(), 50));
@@ -128,6 +135,21 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 		chosenCity = txtCityInput.getText();
 		try {
 			dataParser = new DataParser(chosenCity);
+			DbConnector.getInstance().insertData(dataParser.getCityName(),
+					dataParser.getMinTemperatureDouble(0),
+					dataParser.getMaxTemperatureDouble(0),
+					dataParser.getPressure(0)
+			);
+			DbConnector.getInstance().insertData(dataParser.getCityName(),
+					dataParser.getMinTemperatureDouble(1),
+					dataParser.getMaxTemperatureDouble(1),
+					dataParser.getPressure(1)
+			);
+			DbConnector.getInstance().insertData(dataParser.getCityName(),
+					dataParser.getMinTemperatureDouble(2),
+					dataParser.getMaxTemperatureDouble(2),
+					dataParser.getPressure(2)
+			);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -142,17 +164,25 @@ public class ShowParsedDataWindow extends JFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		try {
-			if(dataParser.isConnectionEstablished())
-				updateData();
-			else {
-				System.out.println("No internet connection");
-				Dialog dialogNoConnection = new Dialog("No internet connection", "OK");
-				dialogNoConnection.Show();
+		if(e.getSource() == txtCityInput) {
+			try {
+				if(dataParser.isConnectionEstablished()) {
+					updateData();
+				}	
+				else {
+					System.out.println("No internet connection");
+					Dialog dialogNoConnection = new Dialog("No internet connection", "OK");
+					dialogNoConnection.Show();
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
+		else if(e.getSource() == showDatabase) {
+			DataBaseWindow dbwindow = new DataBaseWindow();
+			dbwindow.setVisible(true);
+		}
+		
 	}
 }

@@ -43,18 +43,7 @@ public class DataParser {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 				}
-			//}
-			//else {
-			//	System.out.println("No internet connection");
-			//	Dialog dialogNoConnection = new Dialog("No internet connection", "OK");
-			//	dialogNoConnection.Show();
-			//}
-			/*catch(Exception e) {
-				System.out.println("No internet connection");
-				Dialog dialogNoConnection = new Dialog("No internet connection", "OK");
-				dialogNoConnection.Show();
-			}*/
-			
+						
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -122,6 +111,14 @@ public class DataParser {
 		DecimalFormat df = new DecimalFormat("##.##");
 		df.setRoundingMode(RoundingMode.HALF_EVEN);
 		return df.format(weather.getList()[day*8].getMain().getTempMax() - 273); 
+	}
+	
+	public double getMaxTemperatureDouble(int day) {
+		return (weather.getList()[day*8].getMain().getTempMax() - 273);
+	}
+	
+	public double getMinTemperatureDouble(int day) {
+		return (weather.getList()[day*8].getMain().getTempMin() - 273);
 	}
 	
 	public double getPressure(int day) {
